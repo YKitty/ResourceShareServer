@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body{
+				background: #000000;
+			}
+			#c1{
+				background: #FFFFFF;
+			}
+			span{color: #FFFFFF;}
+		</style>
+	</head>
+	<body>
+		<canvas id="c1" width="400" height="400">
+			<span></span>
+		</canvas>
+		<script type="text/javascript">
+			var oC=document.getElementById("c1");
+			var oGc=oC.getContext('2d');
+		setInterval(function(){ //循环计时器每一秒调用一次，相当于每隔一秒画一次表盘
+				oGc.clearRect(0,0,oC.offsetWidth,oC.offsetHeight); //每次画之前，先向画布上删除一次；
+			var newT=new Date();
+			 //newT.getMinutes()/2,分钟每走一圈,时针转30度
+			var hour=newT.getHours()*30+newT.getMinutes()/2-90;  
+			//newT.getSeconds()/10,秒针走完一圈,分针转6度.
+			var min=newT.getMinutes()*6+newT.getSeconds()/10-90; 
+			var second=newT.getSeconds()*6-90;
+			//制作小刻度
+			for(var i=0;i<60;i++){
+				oGc.beginPath();
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,150,i*6*Math.PI/180,(i+1)*6*Math.PI/180,false);
+				oGc.stroke();
+				oGc.closePath();
+			}
+			//覆盖表盘
+				oGc.beginPath();
+				oGc.fillStyle="#FFFFFF"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,140,0,360*Math.PI/180,false);
+				oGc.fill();
+				oGc.closePath();
+			//大刻度
+			for(var i=0;i<12;i++){
+				oGc.beginPath();
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,150,i*30*Math.PI/180,(i+1)*30*Math.PI/180,false);
+				oGc.stroke();
+				oGc.closePath();
+			}
+			//覆盖大刻度
+				oGc.beginPath();
+				oGc.fillStyle="#FFFFFF"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,133,0,360*Math.PI/180,false);
+				oGc.fill();
+				oGc.closePath();
+			//时针
+				oGc.beginPath();
+				oGc.strokeStyle="#000000"
+				oGc.lineWidth="6"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,80,hour*Math.PI/180,hour*Math.PI/180,false);
+				oGc.stroke();
+				oGc.closePath();
+			//分针
+				oGc.beginPath();
+				oGc.strokeStyle="orange"
+				oGc.lineWidth="4"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,100,min*Math.PI/180,min*Math.PI/180,false);
+				oGc.stroke();
+				oGc.closePath();
+			//秒针
+				oGc.beginPath();
+				oGc.strokeStyle="red"
+				oGc.lineWidth="2"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,110,second*Math.PI/180,second*Math.PI/180,false);
+				oGc.stroke();
+				oGc.closePath();
+			//圆心覆盖
+				oGc.beginPath();
+				oGc.fillStyle="red"
+				oGc.moveTo(200,200);
+				oGc.arc(200,200,5,0,360*Math.PI/180,false);
+				oGc.fill();
+				oGc.closePath();
+		},1000)
+		</script>
+	</body>
+</html>
